@@ -10,7 +10,11 @@ For more information about model access, please visit https://www.soilcarbonsolu
 # How to Install
 
 You can install this package using devtools:
-- devtools::install_github("CSU-Soil-Carbon-Solution-Center/DDcentutils", upgrade_dependencies = c("never"))
+```{r}
+devtools::install_github("CSU-Soil-Carbon-Solution-Center/DDcentutils", upgrade_dependencies = c("ask"))
+```
 
 Or alternatively you can download the compressed package (tar.gz file) and install it locally:
-- install.packages(path = here::here("DDcentutils_0.0.0.9000.tar"), repos = NULL, type = "source")
+```{r}
+install.packages(path = here::here("DDcentutils_0.0.0.9000.tar"), repos = NULL, type = "source")
+```
