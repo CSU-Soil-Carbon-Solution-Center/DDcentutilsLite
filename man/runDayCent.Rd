@@ -10,6 +10,7 @@ runDayCent(
   run,
   dc_exe_in = dc_exe,
   dc_path100_in = dc_path100,
+  single_site_logic = FALSE,
   ...
 )
 }

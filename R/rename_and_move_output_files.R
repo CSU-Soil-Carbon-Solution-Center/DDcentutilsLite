@@ -16,6 +16,10 @@ rename_and_move_output_files <- function(run, output_dir = "./outputs/", ...) {
   # Get a list of files with .out or .csv extensions
   output_files <- list.files(pattern = "\\.(out|csv)$")
 
+  if(!dir.exists(output_dir)){
+    dir.create(output_dir, recursive = T)
+  }
+
   # Check if there are output files
   if (length(output_files) > 0) {
     # Rename the files by prepending the 'run' identifier

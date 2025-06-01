@@ -13,16 +13,16 @@
 #' @export
 noBinFlag <- function(run, runCheck) {
   # Check if the .bin file exists
-  bin_file <- paste0("./", run, ".bin")
+  ext_site_file <- paste0("./", run, "_extend.100")
 
-  if (!file.exists(bin_file) & !runCheck) {
+  if (!file.exists(ext_site_file)&!runCheck) {
     # Stop with an error if the .bin file is missing
-    stop(paste0("No ", run, ".bin file is found. Please set 'run_", run," = TRUE' and run the script again."))
-  } else if(!runCheck) {
+    stop(paste0("No ", run, " extended site is found. Please set 'run_", run," = TRUE' and run the script again."))
+  }else if(!runCheck) {
     # Continue if the file exists and notify the user
-    message(paste0("Notice: The ", run, " was not run, but a ", run, ".bin file was found. Continuing with the process."))
-  } else{
-    paste0("Starting the ", run, " run.")
+    message(paste0("Notice: The ", run, " was not run, but a ", run, " extended site file was found. Continuing with the process."))
+  }else{
+    paste0("Startin the ", run, " run.")
   }
 
 }

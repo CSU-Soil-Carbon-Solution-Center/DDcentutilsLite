@@ -15,7 +15,8 @@
 #'
 #' @export
 runDayCent <- function(outfiles = "no_outfiles.in", site, run,
-                       dc_exe_in = dc_exe, dc_path100_in = dc_path100, ...) {
+                       dc_exe_in = dc_exe, dc_path100_in = dc_path100,
+                       single_site_logic = FALSE, ...) {
   # Check if required input files exist
   if (!file.exists(outfiles)) {
     stop("Error: 'no_outfiles.in' file does not exist.")
@@ -28,13 +29,17 @@ runDayCent <- function(outfiles = "no_outfiles.in", site, run,
   }
 
   # Define the run type and extend arguments accordingly
-  extendRun <- if (run == "eq") {
+  # single run logic, bypasses the spin up and directly runs the site.
+  extendRun <- if (single_site_logic) {
+    paste0("") #" --site ", single_site)
+  } else if (run == "eq") {
     " -W eq_extend.100"
   } else if (run == "base") {
     " -W base_extend.100 --site eq_extend.100"
-  } else {
+  }  else {
     " --site base_extend.100"
   }
+
 
   # Copy no_outfiles.in to suppress output during equilibrium run
   file.copy(from = outfiles, to = "outfiles.in", overwrite = TRUE)

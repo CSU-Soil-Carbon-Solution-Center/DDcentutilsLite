@@ -25,42 +25,39 @@
 DayCentRunSite <- function(site, scen, run_eq = FALSE, run_base = FALSE,
                            dc_exe_in = dc_exe, dc_path100_in = dc_path100,
                            output_base = "few_outfiles.in",
-                           output_scen = "basic_outfiles.in", ...) {
-
+                           output_scen = "basic_outfiles.in",...) {
   # Run equilibrium simulation if specified
+
+
   run <- "eq"
-  noBinFlag(run = run, runCheck = run_eq)  # Check for .bin file before running
+  noBinFlag(run = run,runCheck =  run_eq)  # Check for .bin file before running
 
   if (run_eq) {
     run_base = T
-    log <- runDayCent(outfiles = "no_outfiles.in", site = site, run = run,
-                      dc_exe_in = dc_exe, dc_path100_in = dc_path100_in)
-    rename_and_move_output_files(run)
+    log <- runDayCent(outfiles = "no_outfiles.in", site = site, run = run, dc_path100_in = dc_path100_in)
+    rename_and_move_output_files(run, paste0("./outputs/",run))
     print(log %>% tail(1))
     print(paste(site, run, "simulation complete."))
   }
 
 
-    run <- "base"
-    noBinFlag(run, runCheck = run_base)  # Check for .bin file before running
-
-    # Run base simulation if specified
+  run <- "base"
+  noBinFlag(run,runCheck = run_base)  # Check for .bin file before running
+  # Run base simulation if specified
   if (run_base) {
 
-    log <- runDayCent(outfiles = output_base, site = site, run = run,
-                      dc_exe_in = dc_exe, dc_path100_in = dc_path100_in)
-    rename_and_move_output_files(run)
+    log <- runDayCent(outfiles = output_base, site = site, run = run, dc_path100_in = dc_path100_in)
+    rename_and_move_output_files(run, paste0("./outputs/",run))
     print(log %>% tail(1))
     print(paste(site, run, "simulation complete."))
   }
 
-    # Run scenario simulation if .sch file exists
+  # Run scenario simulation if .sch file exists
   run <- scen
   sch_file <- paste0("./", site, "_", scen, ".sch")
   if (file.exists(sch_file)) {
-    log <- runDayCent(outfiles = output_scen , site = site, run = run,
-                      dc_exe_in = dc_exe, dc_path100_in = dc_path100_in)
-    rename_and_move_output_files(run)
+    log <- runDayCent(outfiles = output_scen , site = site, run = run, dc_path100_in = dc_path100_in)
+    rename_and_move_output_files(run, paste0("./outputs/",run))
     print(log %>% tail(1))
     print(paste(site, run, "simulation complete."))
   } else {
