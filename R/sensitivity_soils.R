@@ -65,9 +65,7 @@ sensitivity_soils <- function(title, site, scen, exp_list,
     file.copy(i, "./soils.in", overwrite = T)
     # Run the DayCent simulation for the experiment
     print(paste0("Run DayCent with site = ", site, ", scenario = ", scen, ", soil.in = ", i))
-    DayCentRunSite(site = site, scen = scen,
-                   dc_exe_in = dc_exe_in, dc_path100_in = dc_path100_in,
-                   run_base = run_base, run_eq = run_eq)
+    DayCentRunSite(site = site, scen = scen, run_base = run_base, run_eq = run_eq)
 
     # Read the dc_sip.csv file and add a date column
     temp_dc_sip <- read_csv(paste0("./outputs/", scen, "_dc_sip.csv")) %>%
@@ -155,6 +153,8 @@ sensitivity_soils <- function(title, site, scen, exp_list,
                                            title %>% gsub(" ", "_",.), "_dcsip.csv"))
   write_csv(combined_harvest, file = paste0(save_figure_temp_path,
                                             title %>% gsub(" ", "_",.), "_harvest.csv"))
+  write_csv(combined_summary, file = paste0(save_figure_temp_path,
+                                            title %>% gsub(" ", "_",.), "_summary.csv"))
 
   n = 1
   for (plot in p_j) {

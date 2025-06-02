@@ -65,9 +65,8 @@ sensitivity_exp_run <- function(title, site, exp_list,
   for (i in exp_list) {
     # Run the DayCent simulation for the experiment
     print(paste0("Run DayCent with site = ", site, ", scenario = ", i))
-    DayCentRunSite(site = site, scen = i,
-                   dc_exe_in = dc_exe_in, dc_path100_in = dc_path100_in,
-                   run_base = run_base, run_eq = run_eq)
+    DayCentRunSite(site = site, scen = i, run_base = run_base,
+                   run_eq = run_eq, dc_exe_in = dc_path100_explore)
 
     # Read the dc_sip.csv file and add a date column
     temp_summary <- data.table::fread(paste0("./outputs/", i, "_summary.out")) %>%
@@ -93,6 +92,8 @@ sensitivity_exp_run <- function(title, site, exp_list,
                                                   year(date) <= select_years[[2]])
     combined_harvest <- combined_harvest %>% filter(year(date) >= select_years[[1]],
                                                     year(date) <= select_years[[2]])
+    combined_summary <- combined_summary %>% filter(year(date) >= select_years[[1]],
+                                                    year(date) <= select_years[[2]])
   }
 
   # Create plots for the specified variables
@@ -100,7 +101,7 @@ sensitivity_exp_run <- function(title, site, exp_list,
   p_j_names <- list()
   p_j[[1]] <- ggplot(combined_dc_sip) +
     # geom_point(aes(x = date, y = `som1c(2)`+`som2c(2)`+ som3c, col = scen)) + #.data[[j]]
-    geom_line(aes(x = date, y = `som1c(2)`+`som2c(2)`+ som3c, col = scen)) + #.data[[j]]
+    geom_line(aes(x = date, y = `som1c(2)`+`som2c(2)`+ som3c, col = scen %>% factor(levels = exp_list)), alpha=.75) + #.data[[j]]
     labs(title = paste(title, "SOC"), col = "Experiment", y = "SOC [g/m2 C]") +
     theme_classic()
   p_j_names[[1]] = paste0(title_no_space, "_SOC")
@@ -109,7 +110,7 @@ sensitivity_exp_run <- function(title, site, exp_list,
     for (j in dc_var_list) {
       p_j[[k]] <- ggplot(combined_dc_sip) +
         # geom_point(aes(x = date, y = .data[[j]], col = scen)) + #.data[[j]]
-        geom_line(aes(x = date, y = .data[[j]], col = scen)) + #.data[[j]]
+        geom_line(aes(x = date, y = .data[[j]], col = scen %>% factor(levels = exp_list)), alpha=.75) + #.data[[j]]
         labs(title = paste(title, j), col = "Experiment") +
         theme_classic()
       p_j_names[[k]] = paste0(title_no_space, "_", j)
@@ -127,7 +128,7 @@ sensitivity_exp_run <- function(title, site, exp_list,
       # Create the plot
       p_j[[k]] <- ggplot(combined_dc_sip_j) +
         # geom_point(aes(x = date, y = .data[[paste0(j, "_cum")]], col = scen)) + # Use cumulative column
-        geom_line(aes(x = date, y = .data[[paste0(j, "_cum")]], col = scen)) +  # Use cumulative column
+        geom_line(aes(x = date, y = .data[[paste0(j, "_cum")]], col = scen %>% factor(levels = exp_list)), alpha=.75) +  # Use cumulative column
         labs(title = paste(title, j, "Cumulative Sum"), col = "Experiment") +
         theme_classic()
       p_j_names[[k]] = paste0(title_no_space, "_", j, "_cs")
@@ -139,7 +140,7 @@ sensitivity_exp_run <- function(title, site, exp_list,
     for (j in summary_list) {
       p_j[[k]] <- ggplot(combined_summary) +
         # geom_point(aes(x = date, y = .data[[j]], col = scen)) + #.data[[j]]
-        geom_line(aes(x = date, y = .data[[j]], col = scen)) + #.data[[j]]
+        geom_line(aes(x = date, y = .data[[j]], col = scen %>% factor(levels = exp_list)), alpha=.75) + #.data[[j]]
         labs(title = paste(title, j), col = "Experiment") +
         theme_classic()
       p_j_names[[k]] = paste0(title_no_space, "_", j)
@@ -148,7 +149,7 @@ sensitivity_exp_run <- function(title, site, exp_list,
   }
 
   if(length(summary_cummsum_list)>0){
-    for (j in dc_yr_cummsum_list) {
+    for (j in summary_cummsum_list) {
       # Calculate cumulative sum grouped by year and scen
       combined_summary_j <- combined_summary %>%
         group_by(year(date), scen) %>%
@@ -157,7 +158,8 @@ sensitivity_exp_run <- function(title, site, exp_list,
       # Create the plot
       p_j[[k]] <- ggplot(combined_summary_j) +
         # geom_point(aes(x = date, y = .data[[paste0(j, "_cum")]], col = scen)) + # Use cumulative column
-        geom_line(aes(x = date, y = .data[[paste0(j, "_cum")]], col = scen)) +  # Use cumulative column
+        geom_line(aes(x = date, y = .data[[paste0(j, "_cum")]],
+                      col = scen %>% factor(levels = exp_list)), alpha=.75) +  # Use cumulative column
         labs(title = paste(title, j, "Cumulative Sum"), col = "Experiment") +
         theme_classic()
       p_j_names[[k]] = paste0(title_no_space, "_", j, "_cs")
@@ -168,8 +170,10 @@ sensitivity_exp_run <- function(title, site, exp_list,
   if(length(harvest_var_list)>0){
     for (j in harvest_var_list) {
       p_j[[k]] <- ggplot(combined_harvest) +
-        geom_point(aes(x = date, y = .data[[j]], col = scen, shape = crpval)) + #.data[[j]]
-        geom_line(aes(x = date, y = .data[[j]], col = scen, group = interaction(scen, crpval))) + #.data[[j]]
+        geom_point(aes(x = date, y = .data[[j]], col = scen %>% factor(levels = exp_list),
+                       shape = crpval), alpha=.75) + #.data[[j]]
+        geom_line(aes(x = date, y = .data[[j]], col =  scen %>% factor(levels = exp_list),
+                      group = interaction(scen, crpval)), alpha=.75) + #.data[[j]]
         labs(title = paste(title, j), col = "Experiment", shape = "Crop") +
         theme_classic()
       p_j_names[[k]] = paste0(title_no_space, "_", j)
@@ -190,6 +194,8 @@ sensitivity_exp_run <- function(title, site, exp_list,
                                            title %>% gsub(" ", "_",.), "_dcsip.csv"))
   write_csv(combined_harvest, file = paste0(save_figure_temp_path,
                                             title %>% gsub(" ", "_",.), "_harvest.csv"))
+  write_csv(combined_summary, file = paste0(save_figure_temp_path,
+                                            title %>% gsub(" ", "_",.), "_summary.csv"))
 
   n = 1
   for (plot in p_j) {
