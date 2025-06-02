@@ -153,8 +153,6 @@ sensitivity_soils <- function(title, site, scen, exp_list,
                                            title %>% gsub(" ", "_",.), "_dcsip.csv"))
   write_csv(combined_harvest, file = paste0(save_figure_temp_path,
                                             title %>% gsub(" ", "_",.), "_harvest.csv"))
-  write_csv(combined_summary, file = paste0(save_figure_temp_path,
-                                            title %>% gsub(" ", "_",.), "_summary.csv"))
 
   n = 1
   for (plot in p_j) {
