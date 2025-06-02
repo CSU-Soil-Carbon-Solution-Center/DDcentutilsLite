@@ -17,5 +17,5 @@ devtools::install_github("CSU-Soil-Carbon-Solution-Center/DDcentutils", upgrade_
 
 Or alternatively you can download the compressed package (tar.gz file) and install it locally:
 ```{r}
-install.packages(here::here("DDcentutils_0.0.0.9000.tar.gz"), repos = NULL, type = "source")
+install.packages(here::here("DDcentutils_0.0.0.9000.tar.gz"), repos = NULL, source = TRUE)
 ```
