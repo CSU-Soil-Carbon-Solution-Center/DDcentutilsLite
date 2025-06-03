@@ -12,7 +12,7 @@ For more information about model access, please visit https://www.soilcarbonsolu
 You can install this package using devtools:
 ```{r}
 # devtools version 2.4.5 (2022)
-devtools::install_github("CSU-Soil-Carbon-Solution-Center/DDcentutils", upgrade_dependencies = c("ask"))
+devtools::install_github("CSU-Soil-Carbon-Solution-Center/DDcentutils", dependencies = TRUE, upgrade = c("ask"))
 ```
 
 Or alternatively you can download the compressed package (tar.gz file) and install it locally:
