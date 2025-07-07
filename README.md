@@ -2,7 +2,7 @@
 
 R package created by the SCSC Ecosystem Modeling and Data Consortium Team to facilitate the use of the DayCent model and visualization of results.
 This package is under construction and we welcome feedback.
-We created a Discussions forum on GitHub to facilitate questions about the package and suggest ideas for further development: <https://github.com/CSU-Soil-Carbon-Solution-Center/DDcentutils/discussions> You can also report bugs by creating an issue on the repository.
+We created a Discussions forum on GitHub to facilitate Q&A about the package and suggest ideas for further development: <https://github.com/CSU-Soil-Carbon-Solution-Center/DDcentutils/discussions> You can also report bugs by creating an issue on the repository.
 For more about creating an issue, please visit: <https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue>
 
 Please note that the package does not include the DayCent model.
