@@ -49,7 +49,7 @@ runDayCent <- function(outfiles = "no_outfiles.in", site, run,
 
   # Run the equilibrium process
   log <- system2(
-    command = dc_exe_in,   # Path to the equilibrium executable
+    command = dc_exe_in,# Path to the equilibrium executable
     args = eq_args,     # Arguments for the equilibrium run
     wait = TRUE,        # Wait for the process to finish
     stdout = TRUE,      # Capture standard output
