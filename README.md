@@ -18,8 +18,8 @@ You can install this package using the install_github function from the devtools
 devtools::install_github("CSU-Soil-Carbon-Solution-Center/DDcentutils", dependencies = TRUE, upgrade = c("ask"))
 ```
 
-Or alternatively you can download the compressed package (tar.gz file) and install it locally:
+Or alternatively you can download the compressed package (tar.gz file) and install it locally (requires Rtools):
 
 ```{r}
-install.packages(here::here("DDcentutils_0.0.0.9000.tar.gz"), repos = NULL, source = TRUE)
+install.packages(here::here("DDcentutils_0.1.0.tar.gz"), repos = NULL, source = TRUE)
 ```
