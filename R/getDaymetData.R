@@ -17,6 +17,7 @@
 #'
 #' @details
 #' The function downloads Daymet weather data based on a user-specified time interval and adds an additional row for day 366 in leap years.
+#' The function then saves the weather file to the working directory ./sites/{site}/{site}_daymet.wth in the 7 column format.
 #' More information about Daymet data can be found on: daymet.ornl.gov/overview.
 #' The returned data frame includes the following variables in the order necessary for a DayCent run:
 #' \itemize{
@@ -71,4 +72,9 @@ getDaymetData <- function(raw_data_path = NULL, site = site,
   ) %>%
     dplyr::select(day, month, year, yday, tmax_C, tmin_C, prcp_cm_day, srad_Wm2, VPD_kpa_day)
 
+  weather_data_DayCent_out = weather_data_DayCent%>%
+    select(monthDay,month, year,yday, tmax_C,tmin_C, prcp_cm_day)
+  temp_wth_file = here("sites", site, paste0(site, "_daymet.wth"))
+  write_delim(weather_data_DayCent_out, file = temp_wth_file,col_names = F)
+  return(weather_data_DayCent)
 }
