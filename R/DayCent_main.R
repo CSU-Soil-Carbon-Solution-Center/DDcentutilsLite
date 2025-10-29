@@ -36,7 +36,7 @@ daycent_main <- function(site, run, config_file, run_eq = TRUE, strict = FALSE) 
   must_exist_file(dc_exe)
   must_exist_dir(dc_path100)
 
-  log_file <- file.path(site_dir, paste0("daycent_run_", run, ".log"))
+  log_file <- file.path(site_dir, paste0(site, "_", run, ".log"))
   logger::log_appender(logger::appender_tee(log_file))
   logger::log_layout(logger::layout_glue_colors)
   logger::log_info("Initialized run: site={site}, run={run}, config={config_file}, run_eq={run_eq}")
