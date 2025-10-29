@@ -30,16 +30,17 @@
   addLeapYear <- function(data_in){
 
     # Filter for leap years and day 365
-    doy365 = data_in %>% filter(year %% 4 == 0, yday == 365)
+    doy365 = data_in %>%
+      dplyr::filter(year %% 4 == 0, yday == 365)
     doy365$yday = 366  # Change to day 366 for leap year
 
     # Append the new rows for the 366th day
-    data_in = rbind(data_in, doy365)
+    data_in = dplyr::bind_rows(data_in, doy365)
 
     # Recalculate date and month
-    data_in = data_in %>% mutate(
+    data_in = data_in %>% dplyr::mutate(
       date = as.Date(paste(year, yday, sep = "-"), "%Y-%j"),
-      month = month(date))
+      month = lubridate::month(date))
 
     return(data_in)
   }

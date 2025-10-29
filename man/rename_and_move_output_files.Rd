@@ -17,6 +17,8 @@ rename_and_move_output_files(
 \item{output_dir}{character. Local path indicating where output files will be saved.}
 
 \item{extensions}{character. File extensions to be moved to the outputs folder. Use regex to determine the file extensions to be moved.}
+
+\item{...}{Additional arguments passed to downstream functions.}
 }
 \value{
 Files created from a DayCent run are moved from their original location to the outputs folder location specified in the function.

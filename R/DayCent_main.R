@@ -5,7 +5,11 @@
 #' @param config_file Path to config file defining dc_exe and dc_path100.
 #' @param run_eq Logical; run equilibrium + base when TRUE (default).
 #' @param strict Logical; fail on warnings when TRUE.
+#'
+#' @import logger
+#'
 #' @return Invisibly returns DayCent log or output object.
+#'
 #' @export
 daycent_main <- function(site, run, config_file, run_eq = TRUE, strict = FALSE) {
   if (isTRUE(strict)) {
@@ -15,13 +19,6 @@ daycent_main <- function(site, run, config_file, run_eq = TRUE, strict = FALSE) 
   stopf <- function(...) stop(sprintf(...), call. = FALSE)
   must_exist_dir  <- function(p) if (!dir.exists(p))  stopf("Missing directory: %s", p)
   must_exist_file <- function(p) if (!file.exists(p)) stopf("Missing file: %s", p)
-
-  need <- c("logger","DDcentutilsLite")
-  miss <- need[!vapply(need, requireNamespace, logical(1), quietly = TRUE)]
-  if (length(miss)) stopf("Missing packages: %s", paste(miss, collapse = ", "))
-  suppressPackageStartupMessages({
-    library(logger); library(DDcentutilsLite)
-  })
 
   site_dir <- file.path("sites", site)
   must_exist_dir(site_dir)
@@ -58,14 +55,14 @@ daycent_main <- function(site, run, config_file, run_eq = TRUE, strict = FALSE) 
   out <- if (isTRUE(run_eq)) {
     logger::log_info("Running equilibrium + base")
     run_safe(
-      DayCentRunSite(site, run, run_base = TRUE, run_eq = TRUE,
+      DDcentutilsLite::DayCentRunSite(site, run, run_base = TRUE, run_eq = TRUE,
                      dc_exe_in = dc_exe, dc_path100_in = dc_path100),
       "DayCentRunSite failed"
     )
   } else {
     logger::log_info("Running single pass (no equilibrium)")
     run_safe(
-      DayCentRunSite_single_run(site, run,
+      DDcentutilsLite::DayCentRunSite_single_run(site, run,
                                 dc_exe_in = dc_exe, dc_path100_in = dc_path100),
       "DayCentRunSite_single_run failed"
     )
@@ -73,7 +70,7 @@ daycent_main <- function(site, run, config_file, run_eq = TRUE, strict = FALSE) 
 
   if (is.null(out) || NROW(out) == 0) stopf("Run produced no log output.")
   logger::log_info("Run completed successfully.")
-  cat("✅ Done.\n")
+  cat("Done!\n")
 
   invisible(out)
 }
@@ -94,7 +91,7 @@ Arguments:
   run_eq       TRUE/FALSE, 1/0, yes/no  [default: TRUE]
 
 Examples:
-  Rscript -e 'yourpkg::daycent_main_cli()' --args canola_CO base ./config.R TRUE
+  Rscript -e 'DDcentutilsLite::daycent_main_cli()' --args wooster cc_ct ./config/{config}.R TRUE
 "))
   }
 

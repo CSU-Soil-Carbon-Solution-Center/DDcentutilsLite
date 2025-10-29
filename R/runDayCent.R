@@ -7,6 +7,9 @@
 #' @param run character. Describes which DayCent block (equilibrium, base, or experimental) to run based on the schedule file name.
 #' @param dc_exe_in Local path to the DayCent executable.
 #' @param dc_path100_in character. Local path to the 100 files folder for DayCent.
+#' @param single_site_logic logical. Default is FALSE. If TRUE the model runs directly from the site file. If False a logic tree determines the incoming and out going site file from the "run" variable.
+#' @param ... Additional arguments passed to downstream functions.
+#'
 #'
 #' @return The function returns a character vector with the log of the DayCent run. The bin and output files are exported and saved in the site folder.
 #'
@@ -15,7 +18,7 @@
 #'
 #' @export
 runDayCent <- function(outfiles = "no_outfiles.in", site, run,
-                       dc_exe_in = dc_exe, dc_path100_in = dc_path100,
+                       dc_exe_in, dc_path100_in,
                        single_site_logic = FALSE, ...) {
   # Check if required input files exist
   if (!file.exists(outfiles)) {

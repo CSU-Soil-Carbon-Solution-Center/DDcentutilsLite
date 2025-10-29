@@ -6,6 +6,7 @@
 #' @param run character. Scenario descriptor of DayCent block (equilibrium, base, experimental).
 #' @param output_dir character. Local path indicating where output files will be saved.
 #' @param extensions character. File extensions to be moved to the outputs folder. Use regex to determine the file extensions to be moved.
+#' @param ... Additional arguments passed to downstream functions.
 #'
 #' @return Files created from a DayCent run are moved from their original location to the outputs folder location specified in the function.
 #'

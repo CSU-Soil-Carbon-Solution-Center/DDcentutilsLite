@@ -8,8 +8,8 @@ runDayCent(
   outfiles = "no_outfiles.in",
   site,
   run,
-  dc_exe_in = dc_exe,
-  dc_path100_in = dc_path100,
+  dc_exe_in,
+  dc_path100_in,
   single_site_logic = FALSE,
   ...
 )
@@ -24,6 +24,10 @@ runDayCent(
 \item{dc_exe_in}{Local path to the DayCent executable.}
 
 \item{dc_path100_in}{character. Local path to the 100 files folder for DayCent.}
+
+\item{single_site_logic}{logical. Default is FALSE. If TRUE the model runs directly from the site file. If False a logic tree determines the incoming and out going site file from the "run" variable.}
+
+\item{...}{Additional arguments passed to downstream functions.}
 }
 \value{
 The function returns a character vector with the log of the DayCent run. The bin and output files are exported and saved in the site folder.
