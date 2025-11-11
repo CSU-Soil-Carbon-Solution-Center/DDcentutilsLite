@@ -39,7 +39,7 @@ DayCentRunSite <- function(site, scen, run_eq = FALSE, run_base = FALSE,
 
   if (run_eq) {
     run_base = T
-    log <- DDcentutilsLite::runDayCent(outfiles = "no_outfiles.in",
+    log <- DDcentutilsLite::runDayCent(outfiles = "no_outfiles.in",dc_exe_in = dc_exe_in,
                       site = site, run = run, dc_path100_in = dc_path100_in)
     if(stringr::str_detect(log |> utils::tail(1), "Abnormal")){
       print(log |> utils::tail(1))
@@ -55,7 +55,7 @@ DayCentRunSite <- function(site, scen, run_eq = FALSE, run_base = FALSE,
   DDcentutilsLite::noBinFlag(run,runCheck = run_base)  # Check for .bin file before running
   # Run base simulation if specified
   if (run_base) {
-    log <- DDcentutilsLite::runDayCent(outfiles = output_base, site = site, run = run, dc_path100_in = dc_path100_in)
+    log <- DDcentutilsLite::runDayCent(dc_exe_in = dc_exe_in,outfiles = output_base, site = site, run = run, dc_path100_in = dc_path100_in)
     if(stringr::str_detect(log |> utils::tail(1), "Abnormal")){
       print(log |> utils::tail(1))
       return(log)
@@ -69,7 +69,7 @@ DayCentRunSite <- function(site, scen, run_eq = FALSE, run_base = FALSE,
   run <- scen
   sch_file <- paste0("./", site, "_", scen, ".sch")
   if (file.exists(sch_file)) {
-    log <- DDcentutilsLite::runDayCent(outfiles = output_scen , site = site, run = run, dc_path100_in = dc_path100_in)
+    log <- DDcentutilsLite::runDayCent(dc_exe_in = dc_exe_in,outfiles = output_scen , site = site, run = run, dc_path100_in = dc_path100_in)
     DDcentutilsLite::rename_and_move_output_files(run, paste0("./outputs/", scen), extensions = extensions)
     print(log |> tail(1))
     print(paste(site, run, "simulation complete."))

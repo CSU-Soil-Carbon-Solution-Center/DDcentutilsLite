@@ -31,6 +31,7 @@ DayCentRunSite_single_run <- function(site, scen,
 
   if (file.exists(sch_file)) {
     log <- runDayCent(outfiles = output_scen ,
+                      dc_exe_in = dc_exe_in,
                       site = site,
                       run = run,
                       dc_path100_in = dc_path100_in,
