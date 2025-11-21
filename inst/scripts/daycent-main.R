@@ -1,3 +1,3 @@
 #!/usr/bin/env Rscript
 args <- commandArgs(trailingOnly = TRUE)
-do.call(yourpkg::daycent_main_cli, list(args))
+do.call(DDcentutilsLite::daycent_main_cli, list(args))

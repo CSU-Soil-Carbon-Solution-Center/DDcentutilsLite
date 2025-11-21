@@ -82,7 +82,7 @@ daycent_main_cli <- function(args = commandArgs(trailingOnly = TRUE)) {
   print_help <- function(script = "daycent-main") {
     cat(sprintf("
 Usage:
-  Rscript -e 'yourpkg::daycent_main_cli()' --args <site> <run> <config_file> [run_eq]
+  Rscript -e 'DDcentutilsLite::daycent_main_cli()' --args <site> <run> <config_file> [run_eq]
 
 Arguments:
   site         Folder under 'sites/' (e.g. 'canola_CO')
